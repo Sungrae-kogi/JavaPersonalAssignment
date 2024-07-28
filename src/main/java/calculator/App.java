@@ -6,11 +6,18 @@ public class App {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        //연산의 결과 10개를 담을 배열
+        int[] resultArr = new int[10];
+        int idx = 0;
+        
+        //변수 선언
         int firstNumber;
         int secondNumber;
         char operator;
-        int result;
+        String run;
+        int result = 0;
 
+        //계산 실행 루프
         while (true) {
             System.out.println("계산기 프로그램 입니다.");
             System.out.print("첫 번째 숫자를 입력해주세요 : ");
@@ -50,10 +57,13 @@ public class App {
             } catch (ArithmeticException e) {
                 System.out.println(e.getMessage());
             }
+            //계산결과 저장
+            resultArr[idx++] = result; 
             System.out.println();
 
+
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료, 아무키나 입력시 진행)");
-            String run = sc.next();
+            run = sc.next();
             if (run.equals("exit")) {
                 System.out.println("계산기 실행을 종료합니다.");
                 break;
@@ -61,5 +71,11 @@ public class App {
 
         }
 
+        //저장한 resultArr 출력
+        System.out.println("가장 최근의 계산 결과 10개를 출력합니다.");
+        for(int res : resultArr){
+            System.out.print(res+" ");
+        }
+        System.out.println();
     }
 }
