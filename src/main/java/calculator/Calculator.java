@@ -5,7 +5,12 @@ import java.util.LinkedList;
 
 public class Calculator {
     //연산 결과를 저장할 컬렉션
-    private Queue<Integer> resultArr = new LinkedList<>();
+    private Queue<Integer> resultArr;
+
+    //생성자 실행 시 컬렉션 필드 초기화.
+    public Calculator(){
+        this.resultArr = new LinkedList<>();
+    }
 
     public int calculate(char operator, int firstNumber, int secondNumber) {
         int result = 0;
@@ -38,9 +43,6 @@ public class Calculator {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        //Queue에 추가 - 추가한 setter 메소드 사용.
-        setResultArr(result);
 
         return result;
     }

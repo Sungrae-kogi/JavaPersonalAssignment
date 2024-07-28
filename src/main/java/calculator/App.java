@@ -33,7 +33,7 @@ public class App {
             operator = sc.next().charAt(0);
 
             //Calculator 클래스의 인스턴스를 사용해 연산 진행.
-            calculator.calculate(operator, firstNumber, secondNumber);
+            calculator.setResultArr(calculator.calculate(operator, firstNumber, secondNumber));
 
 
             //저장한 resultArr 출력
