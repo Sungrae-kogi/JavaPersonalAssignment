@@ -57,8 +57,18 @@ public class App {
             } catch (ArithmeticException e) {
                 System.out.println(e.getMessage());
             }
-            //계산결과 저장
-            resultArr[idx++] = result; 
+            //계산결과 저장 idx > 9 일때 가장 예전에 저장한 것(idx=0)을 지우고 새로운 값을 가장 마지막자리(idx=9)에 저장.
+            if(idx > 9){
+                //0 idx는 버리는 수, i = 1~9까지를 i-1로 하나씩 옮겨주고 루프가 끝난뒤 i=9 자리에 새로운 값을 할당.
+                for(int i=1; i<=9; i++){
+                    resultArr[i-1] = resultArr[i];
+                }
+                //마지막 자리 = 새로온 값 할당.
+                resultArr[9] = result;
+            }else{
+                resultArr[idx++] = result;
+            }
+
             System.out.println();
 
 
