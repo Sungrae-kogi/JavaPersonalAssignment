@@ -2,19 +2,13 @@ package calculator;
 
 import java.util.Queue;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Calculator {
     //연산 결과를 저장할 컬렉션
     private Queue<Integer> resultArr = new LinkedList<>();
 
-    //스캐너 객체
-    Scanner sc = new Scanner(System.in);
-
     public int calculate(char operator, int firstNumber, int secondNumber) {
         int result = 0;
-        String askRemove;
-        String askPrint;
 
         //try catch로 오류 발생시 예외처리 적합한 Exception클래스생성 및 매개변수 전달.
         try {
@@ -48,15 +42,6 @@ public class Calculator {
         //Queue에 추가 - 추가한 setter 메소드 사용.
         setResultArr(result);
 
-
-        //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
-        System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
-        askRemove = sc.next();
-        if (askRemove.equals("remove")) {
-            resultArr.poll();
-        }
-
-
         return result;
     }
 
@@ -71,5 +56,16 @@ public class Calculator {
         resultArr.add(val);
         System.out.println("입력한 값이 큐에 저장되었습니다.");
         System.out.println();
+    }
+
+    //resultArr 에 저장된 데이터 중 가장 먼저 저장된 데이터를 삭제.
+    public void removeResult(){
+        // 큐가 비어있지 않다면 삭제,
+        if(!resultArr.isEmpty()){
+            resultArr.poll();
+            System.out.println("가장 먼저 저장된 데이터가 하나 삭제되었습니다.");
+        }else{
+            System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니.");
+        }
     }
 }

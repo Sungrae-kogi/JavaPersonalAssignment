@@ -36,6 +36,7 @@ public class App {
             System.out.println("+ - * / 각 연산에 맞는 연산자를 입력해주세요");
             operator = sc.next().charAt(0);
 
+            //Calculator 클래스의 인스턴스를 사용해 연산 진행.
             calculator.calculate(operator, firstNumber, secondNumber);
 
 
@@ -51,6 +52,14 @@ public class App {
                 }
                 System.out.println();
             }
+
+            //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
+            System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
+            askRemove = sc.next();
+            if (askRemove.equals("remove")) {
+                calculator.removeResult();
+            }
+
 
             //무한 반복 while 루프문 탈출 조건 설정.
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료, 아무키나 입력시 진행)");
