@@ -4,14 +4,22 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 public class Calculator {
+    //상수 필드
+    //원의 넓이 계산에 필요한 PI 값은 Math.PI로 얻을 수 있고, 이것은 불변의 값이기 때문에
+    //final로 선언하고 생성된 Calculator 인스턴스들이 공유할 필요가 있는 값이므로 static으로 선언.
+    public static final double PI_VALUE = Math.PI;
+
     //연산 결과를 저장할 컬렉션
     private Queue<Integer> resultArr;
+    private Queue<Double> circleResultArr;
 
     //생성자 실행 시 컬렉션 필드 초기화.
-    public Calculator(){
+    public Calculator() {
         this.resultArr = new LinkedList<>();
+        this.circleResultArr = new LinkedList<>();
     }
 
+    //사칙연산 처리 - 연산자와 두 개의 정수 입력
     public int calculate(char operator, int firstNumber, int secondNumber) {
         int result = 0;
 
@@ -47,10 +55,28 @@ public class Calculator {
         return result;
     }
 
+    //원의 넓이 처리 - 반지름 입력
+    public Double calculateCircleArea(int radius) {
+        double result = 0;
+        try {
+            result = PI_VALUE * radius * radius;
+            System.out.println("계산된 원의 넓이 : "+result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
     //Getter -> 저장된 연산결과 가져오기.
     public Queue<Integer> getResultArr() {
         return resultArr;
     }
+
+    //Getter -> 저장된 원의넓이결과 가져오기
+    public Queue<Double> getCircleResultArr() {
+        return circleResultArr;
+    }
+
 
     //Setter -> 간접 접근으로 필드에 접근하여 수정 리턴은 필요없으니 void
     //요구사항이 자세하지않아 요소 추가 기능을 구현합니다.
@@ -60,21 +86,50 @@ public class Calculator {
         System.out.println();
     }
 
+    //Setter -> 원의 넓이 계산 결과를 저장.
+    public void setCircleResultArr(double circleArea) {
+        circleResultArr.add(circleArea);
+        System.out.println("입력한 값이 큐에 저장되었습니다.");
+        System.out.println();
+    }
+
+
     //resultArr 에 저장된 데이터 중 가장 먼저 저장된 데이터를 삭제.
-    public void removeResult(){
-        // 큐가 비어있지 않다면 삭제,
-        if(!resultArr.isEmpty()){
+    public void removeResult() {
+        // 큐가 비어있지 않다면 삭제
+        if (!resultArr.isEmpty()) {
             resultArr.poll();
             System.out.println("가장 먼저 저장된 데이터가 하나 삭제되었습니다.");
-        }else{
+        } else {
             System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니.");
         }
     }
 
+    //circleResultArr 에 저장된 데이터 중 가장 먼저 저장된 데이터를 삭제.
+    public void removeCircleResult() {
+        //큐가 비어있지 않다면 삭제
+        if (!circleResultArr.isEmpty()) {
+            circleResultArr.poll();
+            System.out.println("가장 먼저 저장된 데이터가 하나 삭제되었습니다.");
+        } else {
+            System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니다.");
+        }
+    }
+
+
     //큐에 저장된 연산 결과들을 조회
-    public void inquiryResults(){
+    public void inquiryResults() {
         System.out.print("저장된 연산 결과 : ");
-        for(Integer res : resultArr){
+        for (Integer res : resultArr) {
+            System.out.print(res + " ");
+        }
+        System.out.println();
+    }
+
+    //큐에 저장된 원의넓이 연산 결과들을 조회
+    public void inquiryCircleResults() {
+        System.out.print("저장된 연산 결과 : ");
+        for (Double res : circleResultArr) {
             System.out.print(res + " ");
         }
         System.out.println();
