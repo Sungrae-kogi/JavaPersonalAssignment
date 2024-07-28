@@ -1,13 +1,18 @@
 package calculator;
 
 import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class App {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         //연산의 결과 10개를 담을 배열
-        int[] resultArr = new int[10];
+        //int[] resultArr = new int[10];
+
+        Queue<Integer> resultArr = new LinkedList<>();
+
         int idx = 0;
         
         //변수 선언
@@ -15,6 +20,7 @@ public class App {
         int secondNumber;
         char operator;
         String run;
+        String askRemove;
         int result = 0;
 
         //계산 실행 루프
@@ -57,20 +63,17 @@ public class App {
             } catch (ArithmeticException e) {
                 System.out.println(e.getMessage());
             }
-            //계산결과 저장 idx > 9 일때 가장 예전에 저장한 것(idx=0)을 지우고 새로운 값을 가장 마지막자리(idx=9)에 저장.
-            if(idx > 9){
-                //0 idx는 버리는 수, i = 1~9까지를 i-1로 하나씩 옮겨주고 루프가 끝난뒤 i=9 자리에 새로운 값을 할당.
-                for(int i=1; i<=9; i++){
-                    resultArr[i-1] = resultArr[i];
-                }
-                //마지막 자리 = 새로온 값 할당.
-                resultArr[9] = result;
-            }else{
-                resultArr[idx++] = result;
-            }
 
+            //Queue에 추가.
+            resultArr.add(result);
             System.out.println();
 
+            //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
+            System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
+            askRemove = sc.next();
+            if(askRemove.equals("remove")) {
+                resultArr.poll();
+            }
 
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료, 아무키나 입력시 진행)");
             run = sc.next();
