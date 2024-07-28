@@ -68,4 +68,13 @@ public class Calculator {
             System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니.");
         }
     }
+
+    //큐에 저장된 연산 결과들을 조회
+    public void inquiryResults(){
+        System.out.print("저장된 연산 결과 : ");
+        for(Integer res : resultArr){
+            System.out.print(res + " ");
+        }
+        System.out.println();
+    }
 }

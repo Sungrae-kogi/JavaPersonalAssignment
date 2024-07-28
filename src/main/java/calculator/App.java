@@ -1,8 +1,6 @@
 package calculator;
 
 import java.util.Scanner;
-import java.util.Queue;
-import java.util.LinkedList;
 
 public class App {
 
@@ -10,7 +8,6 @@ public class App {
         Scanner sc = new Scanner(System.in);
         //연산의 결과 10개를 담을 배열
         //문제 요구 조건이 애매해서 변수 최적화는 추후 단계에서 진행.
-        Queue<Integer> resultArr;
 
         //Calculator 변수 생성
         Calculator calculator = new Calculator();
@@ -22,7 +19,6 @@ public class App {
         String run;
         String askRemove;
         String askPrint;
-        int result = 0;
 
         //계산 실행 루프
         while (true) {
@@ -45,12 +41,7 @@ public class App {
             askPrint = sc.next();
             if(askPrint.equals("inquiry")) {
                 //작성한 Getter를 사용하여 연산 데이터를 가져와서 출력.
-                resultArr = calculator.getResultArr();
-                System.out.print("저장된 연산 결과 : ");
-                for(Integer res : resultArr){
-                    System.out.print(res + " ");
-                }
-                System.out.println();
+                calculator.inquiryResults();
             }
 
             //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
@@ -72,5 +63,6 @@ public class App {
         }
 
         System.out.println();
+        sc.close();
     }
 }
