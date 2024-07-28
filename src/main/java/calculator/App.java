@@ -9,7 +9,8 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         //연산의 결과 10개를 담을 배열
-        //Queue<Integer> resultArr = new LinkedList<>();
+        //문제 요구 조건이 애매해서 변수 최적화는 추후 단계에서 진행.
+        Queue<Integer> resultArr;
 
         //Calculator 변수 생성
         Calculator calculator = new Calculator();
@@ -38,6 +39,18 @@ public class App {
             calculator.calculate(operator, firstNumber, secondNumber);
 
 
+            //저장한 resultArr 출력
+            System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
+            askPrint = sc.next();
+            if(askPrint.equals("inquiry")) {
+                //작성한 Getter를 사용하여 연산 데이터를 가져와서 출력.
+                resultArr = calculator.getResultArr();
+                System.out.print("저장된 연산 결과 : ");
+                for(Integer res : resultArr){
+                    System.out.print(res + " ");
+                }
+                System.out.println();
+            }
 
             //무한 반복 while 루프문 탈출 조건 설정.
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료, 아무키나 입력시 진행)");

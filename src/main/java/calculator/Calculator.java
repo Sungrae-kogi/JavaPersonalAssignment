@@ -45,9 +45,9 @@ public class Calculator {
             System.out.println(e.getMessage());
         }
 
-        //Queue에 추가.
-        resultArr.add(result);
-        System.out.println();
+        //Queue에 추가 - 추가한 setter 메소드 사용.
+        setResultArr(result);
+
 
         //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
         System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
@@ -56,17 +56,20 @@ public class Calculator {
             resultArr.poll();
         }
 
-        //저장한 resultArr 출력
-        System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
-        askPrint = sc.next();
-        if (askPrint.equals("inquiry")) {
-            System.out.print("저장된 연산 결과 : ");
-            for (Integer res : resultArr) {
-                System.out.print(res + " ");
-            }
-            System.out.println();
-        }
 
         return result;
+    }
+
+    //Getter -> 저장된 연산결과 가져오기.
+    public Queue<Integer> getResultArr() {
+        return resultArr;
+    }
+
+    //Setter -> 간접 접근으로 필드에 접근하여 수정 리턴은 필요없으니 void
+    //요구사항이 자세하지않아 요소 추가 기능을 구현합니다.
+    public void setResultArr(int val) {
+        resultArr.add(val);
+        System.out.println("입력한 값이 큐에 저장되었습니다.");
+        System.out.println();
     }
 }
