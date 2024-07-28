@@ -57,7 +57,7 @@ public class App {
                         System.out.println("잘못된 연산자의 입력입니다.");
                         break;
                 }
-            } catch (ArithmeticException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
@@ -68,16 +68,16 @@ public class App {
             //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
             System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
             askRemove = sc.next();
-            if(askRemove.equals("remove")) {
+            if (askRemove.equals("remove")) {
                 resultArr.poll();
             }
 
             //저장한 resultArr 출력
             System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
             askPrint = sc.next();
-            if(askPrint.equals("inquiry")) {
-                for(Integer res : resultArr){
-                    System.out.print(res+" ");
+            if (askPrint.equals("inquiry")) {
+                for (Integer res : resultArr) {
+                    System.out.print(res + " ");
                 }
                 System.out.println();
             }
