@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -31,18 +32,32 @@ public class App {
             System.out.println("사칙연산 처리는 \"사칙연산\" 을, 원의 넓이 계산은 \"원의넓이\" 를 입력해주세요.");
             calcCase = sc.next();
             if (calcCase.equals("사칙연산")) {
-                //사칙연산 계산
-                System.out.print("첫 번째 숫자를 입력해주세요 : ");
-                firstNumber = sc.nextDouble();
 
-                System.out.print("두 번째 숫자를 입력해주세요 : ");
-                secondNumber = sc.nextDouble();
+                try {
+                    //사칙연산 계산
+                    System.out.print("첫 번째 숫자를 입력해주세요 : ");
+                    firstNumber = sc.nextDouble();
+
+                    System.out.print("두 번째 숫자를 입력해주세요 : ");
+                    secondNumber = sc.nextDouble();
+                } catch (Exception e) {
+                    System.out.println("잘못된 입력입니다.");
+                    sc.nextLine(); //잘못된 입력으로 남은 버퍼를 비워줌.
+                    continue;
+                }
 
                 System.out.println("+ - * / 각 연산에 맞는 연산자를 입력해주세요");
                 operator = sc.next().charAt(0);
 
                 //arithmeticCalculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
-                arithmeticCalculator.setResultArr(arithmeticCalculator.calculate(operator,firstNumber,secondNumber));
+                //잘못된 입력이나 오류시 값을 저장하면안된다.
+                double result = arithmeticCalculator.calculate(operator, firstNumber, secondNumber);
+                if (Double.isNaN(result)) {
+                    //오류발생이나 잘못된 입력으로 들어온 경우
+                    System.out.println("오류 발생으로 리턴되었습니다. 실행 초기로 돌아갑니다.");
+                    continue;
+                }
+                arithmeticCalculator.setResultArr(result);
 
                 //저장한 resultArr 출력
                 System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
@@ -77,6 +92,7 @@ public class App {
             } else {
                 //잘못된 계산 방식 입력 처리.
                 System.out.println("올바르지 않은 계산방식 입력입니다.");
+                sc.nextLine();  //잘못된 입력으로 인한 버퍼를 비워줌.
                 continue;
             }
 

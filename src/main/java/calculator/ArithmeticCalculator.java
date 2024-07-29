@@ -6,42 +6,50 @@ import java.util.Queue;
 public class ArithmeticCalculator extends Calculator {
     private Queue<Double> resultArr;
 
-    //생성자
+    private final AddOperator addOperator;
+    private final SubtractOperator subtractOperator;
+    private final DivideOperator divideOperator;
+    private final MultiplyOperator multiplyOperator;
+
+    //생성자 - 사칙연산 클래스들 초기화
     public ArithmeticCalculator() {
         this.resultArr = new LinkedList<Double>();
+        this.addOperator = new AddOperator();
+        this.subtractOperator = new SubtractOperator();
+        this.divideOperator = new DivideOperator();
+        this.multiplyOperator = new MultiplyOperator();
     }
 
     //사칙연산 처리 - 연산자와 두 개의 수 입력
     public double calculate(char operator, double firstNumber, double secondNumber) {
-        double result = 0;
+        double result=Double.NaN;
 
         //try catch로 오류 발생시 예외처리 적합한 Exception클래스생성 및 매개변수 전달.
         try {
             switch (operator) {
                 case '+':
-                    result = firstNumber + secondNumber;
+                    result = addOperator.operate(firstNumber, secondNumber);
                     System.out.println("두 수의 더하기의 결과는 : " + result);
                     break;
                 case '-':
-                    result = firstNumber - secondNumber;
+                    result = subtractOperator.operate(firstNumber, secondNumber);
                     System.out.println("두 수의 뺄셈의 결과는 : " + result);
                     break;
                 case '*':
-                    result = firstNumber * secondNumber;
+                    result = multiplyOperator.operate(firstNumber, secondNumber);
                     System.out.println("두 수의 곱의 결과는 : " + result);
                     break;
                 case '/':
-                    if (secondNumber == 0) {
-                        throw new ArithmeticException("나눗셈 연산에서 분모에 0이 입력될 수 없습니다.");
-                    }
-                    result = firstNumber / secondNumber;
+                    result = divideOperator.operate(firstNumber, secondNumber);
                     System.out.println("두 수의 나눗셈 결과는 : " + result);
                     break;
                 default:
                     throw new IllegalArgumentException("잘못된 연산자 기호의 입력입니다.");
             }
         } catch (Exception e) {
+            //에러발생시 result 에는 NaN값이 그대로 리턴. App.java에서 flag로 사용
             System.out.println(e.getMessage());
+            return result;
         }
 
         return result;
