@@ -3,27 +3,32 @@ package calculator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ArithmeticCalculator extends Calculator {
+public class ArithmeticCalculator implements Calculator {
     private Queue<Double> resultArr;
 
     private final AddOperator addOperator;
     private final SubtractOperator subtractOperator;
     private final DivideOperator divideOperator;
     private final MultiplyOperator multiplyOperator;
+    private final ModOperator modOperator;
 
     //생성자 - 사칙연산 클래스들 초기화
     public ArithmeticCalculator() {
-        this.resultArr = new LinkedList<Double>();
+        this.resultArr = new LinkedList<>();
         this.addOperator = new AddOperator();
         this.subtractOperator = new SubtractOperator();
         this.divideOperator = new DivideOperator();
         this.multiplyOperator = new MultiplyOperator();
+        this.modOperator = new ModOperator();
     }
 
-    //사칙연산 처리 - 연산자와 두 개의 수 입력
-    public double calculate(char operator, double firstNumber, double secondNumber) {
-        double result=Double.NaN;
-
+    //추상메소드 구현
+    @Override
+    public double calculate(String... strings) {
+        double result = Double.NaN;
+        char operator = strings[2].charAt(0);
+        double firstNumber = Double.parseDouble(strings[0]);
+        double secondNumber = Double.parseDouble(strings[1]);
         //try catch로 오류 발생시 예외처리 적합한 Exception클래스생성 및 매개변수 전달.
         try {
             switch (operator) {
@@ -43,6 +48,10 @@ public class ArithmeticCalculator extends Calculator {
                     result = divideOperator.operate(firstNumber, secondNumber);
                     System.out.println("두 수의 나눗셈 결과는 : " + result);
                     break;
+                case '%':
+                    result = modOperator.operate(firstNumber, secondNumber);
+                    System.out.println("두 수의 나머지 연선 결과는 : " + result);
+                    break;
                 default:
                     throw new IllegalArgumentException("잘못된 연산자 기호의 입력입니다.");
             }
@@ -55,7 +64,6 @@ public class ArithmeticCalculator extends Calculator {
         return result;
     }
 
-    //추상메소드 구현
     @Override
     public Queue<Double> getResultArr() {
         return resultArr;

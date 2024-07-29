@@ -3,28 +3,29 @@ package calculator;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class CircleCalculator extends Calculator {
+public class CircleCalculator implements Calculator {
     public static final double PI_VALUE = Math.PI;
     private Queue<Double> resultArr;
 
     //생성자
     public CircleCalculator() {
-        this.resultArr = new LinkedList<Double>();
+        this.resultArr = new LinkedList<>();
     }
 
-    //원의 넓이 처리 - 반지름 입력
-    public Double calculateCircleArea(double radius) {
-        double result = 0;
-        try {
-            result = PI_VALUE * radius * radius;
+    //추상메소드 구현
+    @Override
+    public double calculate(String... strings) {
+        double result = Double.NaN;
+        try{
+            result = PI_VALUE * Double.parseDouble(strings[0]) * Double.parseDouble(strings[0]);
             System.out.println("계산된 원의 넓이 : " + result);
-        } catch (Exception e) {
+        } catch (Exception e){
             System.out.println(e.getMessage());
+            return result;
         }
         return result;
     }
 
-    //추상메소드 구현
     @Override
     public Queue<Double> getResultArr() {
         return resultArr;

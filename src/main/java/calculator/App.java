@@ -1,6 +1,6 @@
 package calculator;
 
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 public class App {
@@ -10,15 +10,15 @@ public class App {
         //연산의 결과 10개를 담을 배열
         //문제 요구 조건이 애매해서 변수 최적화는 추후 단계에서 진행.
 
-        //Calculator 변수 생성
-        ArithmeticCalculator arithmeticCalculator = new ArithmeticCalculator();
-        CircleCalculator circleCalculator = new CircleCalculator();
+        //Calculator 변수 생성- 다형성
+        Calculator arithmeticCalculator = new ArithmeticCalculator();
+        Calculator circleCalculator = new CircleCalculator();
 
         //변수 선언
-        double firstNumber;
-        double secondNumber;
-        double radius;
-        char operator;
+        String firstNumber;
+        String secondNumber;
+        String radius;
+        String operator;
 
         String calcCase;
         String run;
@@ -30,28 +30,31 @@ public class App {
             System.out.println("계산기 프로그램 입니다.");
             //사칙연산 처리와 원의넓이 계산 처리를 분리
             System.out.println("사칙연산 처리는 \"사칙연산\" 을, 원의 넓이 계산은 \"원의넓이\" 를 입력해주세요.");
-            calcCase = sc.next();
+            calcCase = sc.nextLine();
             if (calcCase.equals("사칙연산")) {
 
+                //String 타입으로 바꾸고나서 문제가 발생하지않음.
                 try {
                     //사칙연산 계산
                     System.out.print("첫 번째 숫자를 입력해주세요 : ");
-                    firstNumber = sc.nextDouble();
+                    firstNumber = sc.nextLine();
+                    Double.parseDouble(firstNumber);
 
                     System.out.print("두 번째 숫자를 입력해주세요 : ");
-                    secondNumber = sc.nextDouble();
+                    secondNumber = sc.nextLine();
+                    Double.parseDouble(secondNumber);
+
                 } catch (Exception e) {
                     System.out.println("잘못된 입력입니다.");
-                    sc.nextLine(); //잘못된 입력으로 남은 버퍼를 비워줌.
                     continue;
                 }
 
-                System.out.println("+ - * / 각 연산에 맞는 연산자를 입력해주세요");
-                operator = sc.next().charAt(0);
+                System.out.println("+ - * / % 각 연산에 맞는 연산자를 입력해주세요");
+                operator = sc.nextLine();
 
                 //arithmeticCalculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
                 //잘못된 입력이나 오류시 값을 저장하면안된다.
-                double result = arithmeticCalculator.calculate(operator, firstNumber, secondNumber);
+                double result = arithmeticCalculator.calculate(firstNumber, secondNumber,operator);
                 if (Double.isNaN(result)) {
                     //오류발생이나 잘못된 입력으로 들어온 경우
                     System.out.println("오류 발생으로 리턴되었습니다. 실행 초기로 돌아갑니다.");
@@ -77,10 +80,16 @@ public class App {
             } else if (calcCase.equals("원의넓이")) {
                 //원의 넓이 계산
                 System.out.print("반지름의 값을 입력해주세요 : ");
-                radius = sc.nextDouble();
+                radius = sc.nextLine();
 
                 //circleCalculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
-                circleCalculator.setResultArr(circleCalculator.calculateCircleArea(radius));
+                double result = circleCalculator.calculate(radius);
+                if(Double.isNaN(result)){
+                    //오류발생이나 잘못된 입력으로 들어온 경우
+                    System.out.println("오류 발생으로 리턴되었습니다. 실행 초기로 돌아갑니다.");
+                    continue;
+                }
+                circleCalculator.setResultArr(result);
 
                 //저장한 circleResultArr 출력
                 System.out.println("저장된 원의넓이결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
@@ -89,10 +98,17 @@ public class App {
                     circleCalculator.inquiryResults();
                 }
 
+                //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
+                System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
+                askRemove = sc.next();
+                if (askRemove.equals("remove")) {
+                    circleCalculator.removeResult();
+                }
+
+
             } else {
                 //잘못된 계산 방식 입력 처리.
                 System.out.println("올바르지 않은 계산방식 입력입니다.");
-                sc.nextLine();  //잘못된 입력으로 인한 버퍼를 비워줌.
                 continue;
             }
 
@@ -104,7 +120,7 @@ public class App {
                 System.out.println("계산기 실행을 종료합니다.");
                 break;
             }
-
+            sc.nextLine();
         }
 
         System.out.println();
