@@ -10,12 +10,13 @@ public class App {
         //문제 요구 조건이 애매해서 변수 최적화는 추후 단계에서 진행.
 
         //Calculator 변수 생성
-        Calculator calculator = new Calculator();
+        ArithmeticCalculator arithmeticCalculator = new ArithmeticCalculator();
+        CircleCalculator circleCalculator = new CircleCalculator();
 
         //변수 선언
-        int firstNumber;
-        int secondNumber;
-        int radius;
+        double firstNumber;
+        double secondNumber;
+        double radius;
         char operator;
 
         String calcCase;
@@ -32,48 +33,46 @@ public class App {
             if (calcCase.equals("사칙연산")) {
                 //사칙연산 계산
                 System.out.print("첫 번째 숫자를 입력해주세요 : ");
-                firstNumber = sc.nextInt();
+                firstNumber = sc.nextDouble();
 
                 System.out.print("두 번째 숫자를 입력해주세요 : ");
-                secondNumber = sc.nextInt();
+                secondNumber = sc.nextDouble();
 
                 System.out.println("+ - * / 각 연산에 맞는 연산자를 입력해주세요");
                 operator = sc.next().charAt(0);
 
-                //Calculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
-                calculator.setResultArr(calculator.calculate(operator, firstNumber, secondNumber));
-
+                //arithmeticCalculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
+                arithmeticCalculator.setResultArr(arithmeticCalculator.calculate(operator,firstNumber,secondNumber));
 
                 //저장한 resultArr 출력
                 System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
                 askPrint = sc.next();
                 if (askPrint.equals("inquiry")) {
-                    //작성한 Getter를 사용하여 연산 데이터를 가져와서 출력.
-                    calculator.inquiryResults();
+                    //작성한 inquiry를 사용하여 연산 데이터를 가져와서 출력.
+                    arithmeticCalculator.inquiryResults();
                 }
 
                 //remove를 입력받으면 가장 먼저 저장된 결과가 삭제될 수 있도록.
                 System.out.println("가장 먼저 저장된 연산 결과를  삭제하시겠습니까? (remove 입력 시 삭제)");
                 askRemove = sc.next();
                 if (askRemove.equals("remove")) {
-                    calculator.removeResult();
+                    arithmeticCalculator.removeResult();
                 }
 
             } else if (calcCase.equals("원의넓이")) {
                 //원의 넓이 계산
                 System.out.print("반지름의 값을 입력해주세요 : ");
-                radius = sc.nextInt();
+                radius = sc.nextDouble();
 
-                //Calculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
-                calculator.setCircleResultArr(calculator.calculateCircleArea(radius));
+                //circleCalculator 클래스의 인스턴스를 사용해 연산 진행 및 저장.
+                circleCalculator.setResultArr(circleCalculator.calculateCircleArea(radius));
 
                 //저장한 circleResultArr 출력
                 System.out.println("저장된 원의넓이결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
                 askPrint = sc.next();
                 if (askPrint.equals("inquiry")) {
-                    calculator.inquiryCircleResults();
+                    circleCalculator.inquiryResults();
                 }
-
 
             } else {
                 //잘못된 계산 방식 입력 처리.
@@ -93,6 +92,7 @@ public class App {
         }
 
         System.out.println();
+        //스캐느 객체 닫기는 습관화.
         sc.close();
     }
 }

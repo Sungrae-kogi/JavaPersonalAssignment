@@ -3,135 +3,17 @@ package calculator;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class Calculator {
-    //상수 필드
-    //원의 넓이 계산에 필요한 PI 값은 Math.PI로 얻을 수 있고, 이것은 불변의 값이기 때문에
-    //final로 선언하고 생성된 Calculator 인스턴스들이 공유할 필요가 있는 값이므로 static으로 선언.
-    public static final double PI_VALUE = Math.PI;
+public abstract class Calculator {
+    //calculate 함수도 추상화 하려 했으나, 구조를 아예 뜯어고쳐야 해서 보류.
 
-    //연산 결과를 저장할 컬렉션
-    private Queue<Integer> resultArr;
-    private Queue<Double> circleResultArr;
+    //inquiryResults()에서 직접 저장 Queue에 접근을 해버리면 그만이라 getResultArr()가 쓰일일이 없는상태.
+    public abstract Queue<Double> getResultArr();
 
-    //생성자 실행 시 컬렉션 필드 초기화.
-    public Calculator() {
-        this.resultArr = new LinkedList<>();
-        this.circleResultArr = new LinkedList<>();
-    }
+    public abstract void setResultArr(double val);
 
-    //사칙연산 처리 - 연산자와 두 개의 정수 입력
-    public int calculate(char operator, int firstNumber, int secondNumber) {
-        int result = 0;
+    public abstract void removeResult();
 
-        //try catch로 오류 발생시 예외처리 적합한 Exception클래스생성 및 매개변수 전달.
-        try {
-            switch (operator) {
-                case '+':
-                    result = firstNumber + secondNumber;
-                    System.out.println("두 수의 더하기의 결과는 : " + result);
-                    break;
-                case '-':
-                    result = firstNumber - secondNumber;
-                    System.out.println("두 수의 뺄셈의 결과는 : " + result);
-                    break;
-                case '*':
-                    result = firstNumber * secondNumber;
-                    System.out.println("두 수의 곱의 결과는 : " + result);
-                    break;
-                case '/':
-                    if (secondNumber == 0) {
-                        throw new ArithmeticException("나눗셈 연산에서 분모에 0이 입력될 수 없습니다.");
-                    }
-                    result = firstNumber / secondNumber;
-                    System.out.println("두 수의 나눗셈 결과는 : " + result);
-                    break;
-                default:
-                    throw new IllegalArgumentException("잘못된 연산자 기호의 입력입니다.");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return result;
-    }
-
-    //원의 넓이 처리 - 반지름 입력
-    public Double calculateCircleArea(int radius) {
-        double result = 0;
-        try {
-            result = PI_VALUE * radius * radius;
-            System.out.println("계산된 원의 넓이 : "+result);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return result;
-    }
-
-    //Getter -> 저장된 연산결과 가져오기.
-    public Queue<Integer> getResultArr() {
-        return resultArr;
-    }
-
-    //Getter -> 저장된 원의넓이결과 가져오기
-    public Queue<Double> getCircleResultArr() {
-        return circleResultArr;
-    }
+    public abstract void inquiryResults();
 
 
-    //Setter -> 간접 접근으로 필드에 접근하여 수정 리턴은 필요없으니 void
-    //요구사항이 자세하지않아 요소 추가 기능을 구현합니다.
-    public void setResultArr(int val) {
-        resultArr.add(val);
-        System.out.println("입력한 값이 큐에 저장되었습니다.");
-        System.out.println();
-    }
-
-    //Setter -> 원의 넓이 계산 결과를 저장.
-    public void setCircleResultArr(double circleArea) {
-        circleResultArr.add(circleArea);
-        System.out.println("입력한 값이 큐에 저장되었습니다.");
-        System.out.println();
-    }
-
-
-    //resultArr 에 저장된 데이터 중 가장 먼저 저장된 데이터를 삭제.
-    public void removeResult() {
-        // 큐가 비어있지 않다면 삭제
-        if (!resultArr.isEmpty()) {
-            resultArr.poll();
-            System.out.println("가장 먼저 저장된 데이터가 하나 삭제되었습니다.");
-        } else {
-            System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니.");
-        }
-    }
-
-    //circleResultArr 에 저장된 데이터 중 가장 먼저 저장된 데이터를 삭제.
-    public void removeCircleResult() {
-        //큐가 비어있지 않다면 삭제
-        if (!circleResultArr.isEmpty()) {
-            circleResultArr.poll();
-            System.out.println("가장 먼저 저장된 데이터가 하나 삭제되었습니다.");
-        } else {
-            System.out.println("현재 큐에 저장된 데이터가 없어 삭제가 되지않았습니다.");
-        }
-    }
-
-
-    //큐에 저장된 연산 결과들을 조회
-    public void inquiryResults() {
-        System.out.print("저장된 연산 결과 : ");
-        for (Integer res : resultArr) {
-            System.out.print(res + " ");
-        }
-        System.out.println();
-    }
-
-    //큐에 저장된 원의넓이 연산 결과들을 조회
-    public void inquiryCircleResults() {
-        System.out.print("저장된 연산 결과 : ");
-        for (Double res : circleResultArr) {
-            System.out.print(res + " ");
-        }
-        System.out.println();
-    }
 }
